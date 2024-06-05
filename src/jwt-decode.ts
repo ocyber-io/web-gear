@@ -62,7 +62,7 @@ export class JwtDecode<T> {
     }
 
     private decodeToken<V>(token: string): V {
-        let decoded: string = this.base64UrlDecode(token)
+        const decoded: string = this.base64UrlDecode(token)
 
         try {
             return JSON.parse(decoded)

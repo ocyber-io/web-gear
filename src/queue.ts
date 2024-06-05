@@ -1,85 +1,85 @@
-
 export class Queue<T> {
-    private active:boolean = true
-    private items = new Array<T>()
+  private active: boolean = true;
+  private items = new Array<T>();
 
+  delete(callback: (item: T) => boolean) {
+    this.items = this.items.filter((item) => {
+      return !callback(item);
+    });
+  }
 
-    delete(callback:(item:T)=>boolean){
-        this.items = this.items.filter(item=>{
-            return !callback(item)
-        })
-    }
+  flush() {
+    this.items = [];
+  }
 
-    flush(){
-        this.items = []
-    }
+  start() {
+    this.active = true;
+  }
 
-    start(){
-        this.active = true
-    }
+  pause() {
+    this.active = false;
+  }
 
-    pause(){
-        this.active = false
-    }
-
-    waitForNextAvailable(){
-        return new Promise<boolean>(resolve => {
-            const interval = setInterval(()=>{
-                if(this.isNotEmpty && this.active){
-                    clearInterval(interval)
-                    resolve(true)
-                }
-            }, 100)
-        })
-    }
-
-    enqueue(item: T) {
-        this.items.push(item);
-    }
-
-    dequeue() {
-        if (this.isNotEmpty) {
-            return this.items.shift()
+  waitForNextAvailable() {
+    return new Promise<boolean>((resolve) => {
+      const interval = setInterval(() => {
+        if (this.isNotEmpty && this.active) {
+          clearInterval(interval);
+          resolve(true);
         }
-        return null;
-    }
+      }, 100);
+    });
+  }
 
-    front() {
-        if (this.isNotEmpty) {
-            return this.items[0];
-        }
-        return null;
-    }
+  enqueue(item: T) {
+    this.items.push(item);
+  }
 
-    get isEmpty() {
-        return this.items.length === 0;
+  dequeue() {
+    if (this.isNotEmpty) {
+      return this.items.shift();
     }
+    return null;
+  }
 
-    get isNotEmpty() {
-        return this.items.length > 0;
+  front() {
+    if (this.isNotEmpty) {
+      return this.items[0];
     }
+    return null;
+  }
 
-    get size() {
-        return this.items.length;
-    }
+  get isEmpty() {
+    return this.items.length === 0;
+  }
 
-    get lastIndex(){
-        return this.items.length - 1
-    }
+  get isNotEmpty() {
+    return this.items.length > 0;
+  }
 
-    isExist(predicate: (value: T, index: number, obj: T[]) => unknown, thisArg?: any): boolean {
-        return this.items.findIndex(predicate) !==-1
-    }
+  get size() {
+    return this.items.length;
+  }
 
-    isNotExist(predicate: (value: T, index: number, obj: T[]) => unknown, thisArg?: any): boolean {
-        return this.items.findIndex(predicate) ===-1
-    }
+  get lastIndex() {
+    return this.items.length - 1;
+  }
 
-    some(predicate: (value: T, index: number, obj: T[]) => unknown, thisArg?: any): boolean {
-        return this.items.some(predicate, thisArg)
-    }
+  isExist(predicate: (value: T, index: number, obj: T[]) => unknown): boolean {
+    return this.items.findIndex(predicate) !== -1;
+  }
 
-    every(predicate: (value: T, index: number, obj: T[]) => unknown, thisArg?: any): boolean {
-        return this.items.every(predicate,thisArg)
-    }
+  isNotExist(
+    predicate: (value: T, index: number, obj: T[]) => unknown,
+  ): boolean {
+    return this.items.findIndex(predicate) === -1;
+  }
+
+  some(predicate: (value: T, index: number, obj: T[]) => unknown): boolean {
+    return this.items.some(predicate);
+  }
+
+  every(predicate: (value: T, index: number, obj: T[]) => unknown): boolean {
+    return this.items.every(predicate);
+  }
 }

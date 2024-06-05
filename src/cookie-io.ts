@@ -34,7 +34,7 @@ export class CookieIO {
       .split(';')
       .map((item) => decodeURIComponent(item.trim()))
       .find((item) => item.startsWith(keyName));
-    if (!!cookie) {
+    if (cookie) {
       try {
         return JSON.parse(cookie.replace(keyName, ''));
       } catch (e) {
