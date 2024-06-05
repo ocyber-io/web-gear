@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "strict": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "WebWorker",
+      "ESNext"
+    ],
+    "skipLibCheck": true,
+    "target": "ES2020",
+    "module": "ESNext",
+    "declaration": true,
+    "sourceMap": true,
+    "rootDir": "./src",
+    "outDir": "dist",
+    //    "declarationDir": "types",
+    "moduleResolution": "bundler",
+    //    "emitDeclarationOnly": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": false
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "types",
+    "node_modules"
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}
